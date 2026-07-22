@@ -56,10 +56,29 @@ public class SettingsCommand<T extends Team, U extends IridiumUser<T>> extends C
 
                 teamSetting.setValue(value.get());
                 iridiumTeams.getTeamManager().saveTeamLog(new TeamLog(team, LogType.TEAM_SETTINGS, iridiumTeams.getTeamLogs().teamSettingsDescription.replace("%setting%", setting.getKey()).replace("%value%", value.get()), user.getUuid()));
+
+                String displayValue = value.get();
+                switch (value.get()) {
+                    case "Enabled": displayValue = iridiumTeams.getMessages().enabledPlaceholder; break;
+                    case "Disabled": displayValue = iridiumTeams.getMessages().disabledPlaceholder; break;
+                    case "Private": displayValue = iridiumTeams.getMessages().privatePlaceholder; break;
+                    case "Public": displayValue = iridiumTeams.getMessages().publicPlaceholder; break;
+                    case "Server": displayValue = iridiumTeams.getMessages().serverPlaceholder; break;
+                    case "Sunny": displayValue = iridiumTeams.getMessages().sunnyPlaceholder; break;
+                    case "Raining": displayValue = iridiumTeams.getMessages().rainingPlaceholder; break;
+                    case "Sunrise": displayValue = iridiumTeams.getMessages().sunrisePlaceholder; break;
+                    case "Day": displayValue = iridiumTeams.getMessages().dayPlaceholder; break;
+                    case "Morning": displayValue = iridiumTeams.getMessages().morningPlaceholder; break;
+                    case "Noon": displayValue = iridiumTeams.getMessages().noonPlaceholder; break;
+                    case "Sunset": displayValue = iridiumTeams.getMessages().sunsetPlaceholder; break;
+                    case "Night": displayValue = iridiumTeams.getMessages().nightPlaceholder; break;
+                    case "Midnight": displayValue = iridiumTeams.getMessages().midnightPlaceholder; break;
+                }
+
                 player.sendMessage(StringUtils.color(iridiumTeams.getMessages().settingSet
                         .replace("%prefix%", iridiumTeams.getConfiguration().prefix)
                         .replace("%setting%", setting.getValue().getDisplayName())
-                        .replace("%value%", value.get())
+                        .replace("%value%", displayValue)
                 ));
 
                 Bukkit.getPluginManager().callEvent(new SettingUpdateEvent<>(team, user, setting.getKey(), value.get()));

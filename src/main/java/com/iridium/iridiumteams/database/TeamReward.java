@@ -18,9 +18,19 @@ public class TeamReward extends TeamData {
     @DatabaseField(columnName = "reward", canBeNull = false, width = 2048)
     private Reward reward;
 
+    @DatabaseField(columnName = "level")
+    private int level;
+
     public TeamReward(@NotNull Team team, Reward reward) {
         super(team);
         this.reward = reward;
+        this.level = 0;
+    }
+
+    public TeamReward(@NotNull Team team, Reward reward, int level) {
+        super(team);
+        this.reward = reward;
+        this.level = level;
     }
 
     public TeamReward(int id) {

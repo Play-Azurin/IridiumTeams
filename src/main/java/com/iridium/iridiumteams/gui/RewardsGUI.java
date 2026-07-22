@@ -60,7 +60,33 @@ public class RewardsGUI<T extends Team, U extends IridiumUser<T>> extends PagedG
 
     @Override
     public ItemStack getItemStack(TeamReward teamReward) {
-        return ItemStackUtils.makeItem(teamReward.getReward().item);
+        ItemStack item = ItemStackUtils.makeItem(teamReward.getReward().item);
+        
+        org.bukkit.inventory.meta.ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            
+            if (meta.hasDisplayName()) {
+                String name = meta.getDisplayName();
+                if (teamReward.getLevel() > 0) {
+                    name = name.replace("%island_level%", String.valueOf(teamReward.getLevel()));
+                }
+                name = StringUtils.processMultiplePlaceholders(name, iridiumTeams.getTeamsPlaceholderBuilder().getPlaceholders(team));
+                meta.setDisplayName(name);
+            }
+            
+            if (meta.hasLore()) {
+                java.util.List<String> lore = meta.getLore();
+                if (teamReward.getLevel() > 0) {
+                    lore.replaceAll(s -> s.replace("%island_level%", String.valueOf(teamReward.getLevel())));
+                }
+                lore = StringUtils.processMultiplePlaceholders(lore, iridiumTeams.getTeamsPlaceholderBuilder().getPlaceholders(team));
+                meta.setLore(lore);
+            }
+            
+            item.setItemMeta(meta);
+        }
+        
+        return item;
     }
 
     @Override

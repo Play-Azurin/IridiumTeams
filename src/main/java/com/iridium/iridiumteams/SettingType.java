@@ -15,7 +15,8 @@ public enum SettingType {
     TIME,
     ENTITY_GRIEF,
     TNT_DAMAGE,
-    TEAM_VISITING;
+    TEAM_VISITING,
+    GENERATOR_ORES;
 
     private final String settingKey = this.name();
 }

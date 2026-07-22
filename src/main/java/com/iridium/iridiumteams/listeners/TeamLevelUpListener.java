@@ -24,7 +24,7 @@ public class TeamLevelUpListener<T extends Team, U extends IridiumUser<T>> imple
     public void onTeamLevelUp(TeamLevelUpEvent<T, U> event) {
         for (U member : iridiumTeams.getTeamManager().getTeamMembers(event.getTeam())) {
             Player player = member.getPlayer();
-            if(player == null) return;
+            if(player == null) continue;
             player.sendMessage(StringUtils.color(iridiumTeams.getMessages().teamLevelUp
                     .replace("%prefix%", iridiumTeams.getConfiguration().prefix)
                     .replace("%level%", String.valueOf(event.getTeam().getLevel()))
@@ -33,17 +33,25 @@ public class TeamLevelUpListener<T extends Team, U extends IridiumUser<T>> imple
 
         if (event.isFirstTimeAsLevel() && event.getLevel() > 1) {
             if(!iridiumTeams.getConfiguration().giveLevelRewards) return;
-            Reward reward = null;
-            List<Map.Entry<Integer, Reward>> entries = iridiumTeams.getConfiguration().levelRewards.entrySet().stream().sorted(Map.Entry.comparingByKey()).collect(Collectors.toList());
-            for (Map.Entry<Integer, Reward> entry : entries) {
-                if (event.getLevel() % entry.getKey() == 0) {
-                    reward = entry.getValue();
+            
+            List<Map.Entry<Integer, Reward>> entries = iridiumTeams.getConfiguration().levelRewards.entrySet().stream()
+                    .sorted(Map.Entry.<Integer, Reward>comparingByKey().reversed())
+                    .collect(Collectors.toList());
+
+            int oldLevel = event.getOldLevel();
+            int newLevel = event.getLevel();
+
+            for (int currentLvl = oldLevel + 1; currentLvl <= newLevel; currentLvl++) {
+                
+                for (Map.Entry<Integer, Reward> entry : entries) {
+                    if (currentLvl % entry.getKey() == 0) {
+                        Reward reward = entry.getValue();
+                        
+                        iridiumTeams.getTeamManager().addTeamReward(new TeamReward(event.getTeam(), reward, currentLvl));
+                        
+                        break;
+                    }
                 }
-            }
-            if (reward != null) {
-                reward.item.lore = StringUtils.processMultiplePlaceholders(reward.item.lore, iridiumTeams.getTeamsPlaceholderBuilder().getPlaceholders(event.getTeam()));
-                reward.item.displayName = StringUtils.processMultiplePlaceholders(reward.item.displayName, iridiumTeams.getTeamsPlaceholderBuilder().getPlaceholders(event.getTeam()));
-                iridiumTeams.getTeamManager().addTeamReward(new TeamReward(event.getTeam(), reward));
             }
         }
     }

@@ -21,6 +21,8 @@ public class Settings {
     public Setting tntDamage;
     public Setting visiting;
 
+    public Setting generatorOres;
+
     public Settings() {
         this("Team", "&c");
     }
@@ -38,6 +40,7 @@ public class Settings {
         entityGrief = new Setting(new Item(XMaterial.ENDER_PEARL, 21, 1, color + team + " Entity Grief", Arrays.asList("&7Control Entity Grief on your " + team + ".", "", "" + color + "&lValue", "&7%value%")), "EntityGrief", "Disabled");
         tntDamage = new Setting(new Item(XMaterial.TNT, 22, 1, color + team + " TnT Damage", Arrays.asList("&7Control TnT Damage on your " + team + ".", "", "" + color + "&lValue", "&7%value%")), "TnTDamage", "Enabled");
         visiting = new Setting(new Item(XMaterial.BEACON, 23, 1, color + team + " Visiting", Arrays.asList("&7Control if people can visit your " + team + ".", "", "" + color + "&lValue", "&7%value%")), "Visiting", "Enabled");
+        generatorOres = new Setting(new Item(XMaterial.COBBLESTONE, 24, 1, color + team + " Generator Ores", Arrays.asList("&7Control custom generator ores on your " + team + ".", "", "" + color + "&lValue", "&7%value%")), "GeneratorOres", "Enabled");
     }
 
 }

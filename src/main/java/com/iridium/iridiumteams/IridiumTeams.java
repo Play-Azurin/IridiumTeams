@@ -178,6 +178,7 @@ public abstract class IridiumTeams<T extends Team, U extends IridiumUser<T>> ext
         Bukkit.getPluginManager().registerEvents(new BlockFormListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockFromToListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockGrowListener<>(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockIgniteListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockPistonListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockSpreadListener<>(this), this);
@@ -207,7 +208,6 @@ public abstract class IridiumTeams<T extends Team, U extends IridiumUser<T>> ext
         Bukkit.getPluginManager().registerEvents(new EntityDamageListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerBucketListener<>(this), this);
         Bukkit.getPluginManager().registerEvents(new TeleportListener<>(this), this);
-        Bukkit.getPluginManager().registerEvents(new SmithItemListener<>(this), this);
     }
 
     public void saveData() {
@@ -261,6 +261,7 @@ public abstract class IridiumTeams<T extends Team, U extends IridiumUser<T>> ext
         addSetting(SettingType.ENTITY_GRIEF.getSettingKey(), getSettings().entityGrief, Arrays.asList("Enabled", "Disabled"));
         addSetting(SettingType.TNT_DAMAGE.getSettingKey(), getSettings().tntDamage, Arrays.asList("Enabled", "Disabled"));
         addSetting(SettingType.TEAM_VISITING.getSettingKey(), getSettings().visiting, Arrays.asList("Enabled", "Disabled"));
+        addSetting(SettingType.GENERATOR_ORES.getSettingKey(), getSettings().generatorOres, Arrays.asList("Enabled", "Disabled"));
 
     }
 

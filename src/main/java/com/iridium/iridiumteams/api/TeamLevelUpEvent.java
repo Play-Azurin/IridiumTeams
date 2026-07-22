@@ -12,10 +12,12 @@ public class TeamLevelUpEvent<T extends Team, U extends IridiumUser<T>> extends 
 
     private static final HandlerList handlers = new HandlerList();
     private final T team;
+    private final int oldLevel;
     private final int level;
 
-    public TeamLevelUpEvent(T team, int level) {
+    public TeamLevelUpEvent(T team, int oldLevel, int level) {
         this.team = team;
+        this.oldLevel = oldLevel;
         this.level = level;
     }
 
